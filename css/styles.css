@@ -1,0 +1,420 @@
+/* ==========================================================================
+   Ríos de Agua Viva — Landing Pre-save
+   Mobile-First · Flat design · Azul marino + Cian neón
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VARIABLES (CSS Custom Properties)
+   Cambia aquí la paleta completa del sitio.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Paleta base (azul marino profundo) */
+  --color-bg:            #050d1f;   /* Fondo principal */
+  --color-bg-soft:       #0b1a36;   /* Superficies / tarjetas */
+  --color-surface:       rgba(11, 26, 54, 0.55); /* Superficie translúcida */
+
+  /* Acento (cian neón) */
+  --color-accent:        #00e5ff;   /* Botones principales */
+  --color-accent-hover:  #5ff0ff;   /* Hover de botones */
+  --color-accent-rgb:    0, 229, 255; /* Para usar en rgba() */
+  --color-on-accent:     #031228;   /* Texto sobre el acento */
+
+  /* Texto */
+  --color-text:          #eaf4ff;
+  --color-text-muted:    #9fb3cf;
+
+  /* Bordes */
+  --color-border:        rgba(255, 255, 255, 0.12);
+
+  /* WhatsApp */
+  --color-whatsapp:      #25d366;
+
+  /* Tipografías */
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-sans:  "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Espaciado y formas */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --radius:   6px;           /* Rectangular, ligeramente suavizado */
+  --radius-lg: 14px;
+  --max-width: 440px;        /* Ancho de la columna en móvil/tablet */
+
+  /* Imagen de portada (versión ligera, usada en el fondo difuminado) */
+  --cover-url: url("../assets/portada-bg.jpg");
+
+  /* Transiciones */
+  --ease: 200ms ease;
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET BÁSICO
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+/* Garantiza que [hidden] gane sobre cualquier display definido */
+[hidden] { display: none !important; }
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+/* Foco visible accesible */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   3. FONDO DIFUMINADO
+   Portada ampliada + blur + capa oscura para garantizar contraste.
+   -------------------------------------------------------------------------- */
+.bg {
+  position: fixed;
+  inset: -40px;                       /* Evita bordes claros por el blur */
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(5, 13, 31, 0.55) 0%, rgba(5, 13, 31, 0.92) 70%, var(--color-bg) 100%),
+    var(--cover-url) center / cover no-repeat,
+    var(--color-bg);
+  filter: blur(28px) saturate(1.2);
+  transform: scale(1.1);
+}
+
+/* --------------------------------------------------------------------------
+   4. LAYOUT PRINCIPAL (columna centrada, Mobile-First)
+   -------------------------------------------------------------------------- */
+.page {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md) calc(var(--space-xl) + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* --------------------------------------------------------------------------
+   5. CABECERA: PORTADA CON GLASSMORPHISM
+   -------------------------------------------------------------------------- */
+.hero { text-align: center; }
+
+.cover-glass {
+  width: min(78vw, 320px);
+  margin: 0 auto var(--space-lg);
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+}
+
+.cover {
+  width: 100%;
+  height: auto;               /* Anula el atributo height del <img> */
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: calc(var(--radius-lg) - 6px);
+  /* Respaldo visual si aún no existe la imagen */
+  background: linear-gradient(135deg, #0b1a36, #0a3a5c 60%, #00a6c7);
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-xs);
+}
+
+/* Título en Serif elegante */
+.title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2rem, 9vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* Artista en Sans-serif limpia */
+.artist {
+  margin-top: var(--space-xs);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Cita reflexiva */
+.quote {
+  margin: var(--space-md) auto 0;
+  max-width: 34ch;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  opacity: 0.9;
+}
+.quote cite {
+  display: block;
+  margin-top: var(--space-xs);
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   6. CONTEO REGRESIVO (minimalista)
+   -------------------------------------------------------------------------- */
+.section-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xs);
+}
+
+.cd-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-sm) 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.cd-num {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;   /* Evita "saltos" al cambiar dígitos */
+  color: var(--color-accent);
+}
+
+.cd-unit {
+  margin-top: 2px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.released-msg {
+  text-align: center;
+  font-weight: 600;
+  color: var(--color-accent);
+  padding: var(--space-sm);
+  border: 1px solid rgba(var(--color-accent-rgb), 0.4);
+  border-radius: var(--radius);
+}
+
+/* --------------------------------------------------------------------------
+   7. BOTONES
+   -------------------------------------------------------------------------- */
+.presave,
+.secondary { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  width: 100%;
+  min-height: 54px;                /* Área táctil cómoda */
+  padding: 0 var(--space-md);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background-color var(--ease), color var(--ease),
+              border-color var(--ease), transform var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:active { transform: scale(0.98); }
+
+.btn .icon { width: 22px; height: 22px; flex-shrink: 0; fill: currentColor; }
+.btn-outline .icon { fill: none; }
+
+/* 7.1 Primario — flat, cian neón sólido */
+.btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+.btn-primary:hover { background-color: var(--color-accent-hover); }
+
+/* 7.2 Secundario — outline */
+.btn-outline {
+  border: 1.5px solid rgba(var(--color-accent-rgb), 0.6);
+  color: var(--color-accent);
+  background-color: transparent;
+}
+.btn-outline:hover {
+  background-color: rgba(var(--color-accent-rgb), 0.1);
+  border-color: var(--color-accent);
+}
+
+/* 7.3 WhatsApp */
+.btn-whatsapp {
+  background-color: var(--color-whatsapp);
+  color: #fff;
+}
+.btn-whatsapp:hover { filter: brightness(1.08); }
+
+/* --------------------------------------------------------------------------
+   8. FOOTER + REDES
+   -------------------------------------------------------------------------- */
+.footer {
+  margin-top: var(--space-md);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+.social a {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-text-muted);
+  transition: color var(--ease);
+}
+.social a:hover { color: var(--color-accent); }
+.social svg { width: 22px; height: 22px; }
+
+.copyright {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   9. MODAL DEL TEASER
+   -------------------------------------------------------------------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--space-md);
+}
+.modal[hidden] { display: none; }
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 8, 20, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fade var(--ease);
+}
+
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  animation: pop 250ms ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: -48px;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  color: var(--color-text);
+  border-radius: var(--radius);
+}
+.modal-close:hover { color: var(--color-accent); }
+.modal-close svg { width: 24px; height: 24px; }
+
+/* Contenedor de video responsivo 16:9 */
+.video-ratio {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+.video-ratio iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Bloquea el scroll del body mientras el modal está abierto */
+body.no-scroll { overflow: hidden; }
+
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pop  { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+
+/* --------------------------------------------------------------------------
+   10. BREAKPOINTS (mejoras progresivas para pantallas más grandes)
+   -------------------------------------------------------------------------- */
+@media (min-width: 480px) {
+  .cd-num { font-size: 2.1rem; }
+}
+
+@media (min-width: 560px) {
+  .secondary { flex-direction: row; }   /* Botones secundarios lado a lado */
+}
+
+@media (min-width: 768px) {
+  :root { --max-width: 480px; }
+  .page { padding-top: var(--space-xl); }
+}
+
+/* Respeta usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

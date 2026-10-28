@@ -1,0 +1,6 @@
+# Sistema
+.DS_Store
+
+# Imágenes fuente en alta resolución (no las usa el sitio)
+assets/portada-original.jpg
+assets/poster.jpg
